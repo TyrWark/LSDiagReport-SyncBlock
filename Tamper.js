@@ -9,7 +9,7 @@
 // @match        https://app.lightspeedanalytics.net/embed/explore/*
 // @match        https://app.lightspeedanalytics.net/embed/*
 // @match        https://lightspeedanalytics.net/back_office*
-// @include      https://raw.githubusercontent.com/TyrWark/LSDiagReport-SyncBlock/refs/heads/main/include.js
+// @require      https://raw.githubusercontent.com/TyrWark/LSDiagReport-SyncBlock/refs/heads/main/include.js
 // @run-at      document-idle
 // @grant       GM_addStyle
 // ==/UserScript==
