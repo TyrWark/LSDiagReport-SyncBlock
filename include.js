@@ -3,6 +3,7 @@
 var SubResp = new Object
 var ParseResp = new Array
 var table
+const timer = ms => new Promise(res => setTimeout(res, ms))
 
 
 
@@ -194,19 +195,28 @@ var CreateReportList = function CreateList(){
 if (window.top === window.self) {
 
 
-    if (window.location.href == "https://lightspeedanalytics.net/cl_accounts/settings")    {
-
+    if (window.location.href == "https://lightspeedanalytics.net/cl_accounts/settings"){
+await timer(750)
         var zNode = document.createElement ('div');
         zNode.innerHTML = '<button id="myButton" type="button">'
             + 'Run Diagnostics!</button>'
         ;
         zNode.setAttribute ('id', 'myContainer');
-        document.body.appendChild (zNode);
+        document.querySelector("#react-root > div > div").append(zNode);
 
         //--- Activate the newly added button.
         document.getElementById ("myButton").addEventListener (
             "click", ButtonClickAction, false
         );
+
+       document.querySelector("#myButton").innerHTML = `<button class="cta">
+  <span>Run Diagnostics!</span>
+  <svg width="15px" height="10px" viewBox="0 0 13 10">
+    <path d="M1,5 L11,5"></path>
+    <polyline points="8 1 12 5 8 9"></polyline>
+  </svg>
+</button>
+`
 
         }else{console.log("Incorrect Page")}
 
@@ -331,7 +341,13 @@ if (window.top === window.self) {
         document.getElementById ("myButton2").addEventListener (
             "click", ButtonClickAction, false
         );
-
+        document.querySelector("#myButton2").innerHTML = `<button class="cta">
+  <span>List Reports!</span>
+  <svg width="15px" height="10px" viewBox="0 0 13 10">
+    <path d="M1,5 L11,5"></path>
+    <polyline points="8 1 12 5 8 9"></polyline>
+  </svg>
+</button>`
 
 
 
@@ -364,25 +380,65 @@ if (window.top === window.self) {
 
 
     GM_addStyle ( `
-    #myContainer {
-        position:               absolute;
-        top:                    0;
-        left:                   100px;
-        font-size:              20px;
-        background:             orange;
-        border:                 3px outset black;
-        margin:                 5px;
-        opacity:                0.9;
-        z-index:                1100;
-        padding:                5px 20px;
-    }
-    #myButton {
-        cursor:                 pointer;
-    }
-    #myContainer p {
-        color:                  red;
-        background:             white;
-    }
+.cta {
+  position: relative;
+  margin: auto;
+  padding: 12px 18px;
+  transition: all 0.2s ease;
+  border: none;
+  background: none;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.cta:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  border-radius: 50px;
+  background: #b1dae7;
+  width: 45px;
+  height: 45px;
+  transition: all 0.3s ease;
+}
+
+.cta span {
+  position: relative;
+  font-family: "Ubuntu", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #234567;
+}
+
+.cta svg {
+  position: relative;
+  top: 0;
+  margin-left: 10px;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke: #234567;
+  stroke-width: 2;
+  transform: translateX(-5px);
+  transition: all 0.3s ease;
+}
+
+.cta:hover:before {
+  width: 100%;
+  background: #b1dae7;
+}
+
+.cta:hover svg {
+  transform: translateX(0);
+}
+
+.cta:active {
+  transform: scale(0.95);
+}
+
 ` );
 
     GM_addStyle ( `
@@ -390,21 +446,66 @@ if (window.top === window.self) {
         position:               absolute;
         top:                    0;
         left:                   100px;
-        font-size:              20px;
-        background:             orange;
-        border:                 3px outset black;
-        margin:                 5px;
-        opacity:                0.9;
-        z-index:                1100;
-        padding:                5px 20px;
+
     }
-    #myButton2 {
-        cursor:                 pointer;
-    }
-    #myContainer2 p {
-        color:                  red;
-        background:             white;
-    }
+.cta {
+  position: relative;
+  margin: auto;
+  padding: 12px 18px;
+  transition: all 0.2s ease;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.cta:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  border-radius: 50px;
+  background: #b1dae7;
+  width: 45px;
+  height: 45px;
+  transition: all 0.3s ease;
+}
+
+.cta span {
+  position: relative;
+  font-family: "Ubuntu", sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: #234567;
+}
+
+.cta svg {
+  position: relative;
+  top: 0;
+  margin-left: 10px;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke: #234567;
+  stroke-width: 2;
+  transform: translateX(-5px);
+  transition: all 0.3s ease;
+}
+
+.cta:hover:before {
+  width: 100%;
+  background: #b1dae7;
+}
+
+.cta:hover svg {
+  transform: translateX(0);
+}
+
+.cta:active {
+  transform: scale(0.95);
+}
+
 ` );
 
 
@@ -2712,7 +2813,7 @@ const dangerlist = [
     "303937",
     "126867",
   ];
-  
+
 
   //Entrypoint
   engine();
@@ -2720,7 +2821,7 @@ const dangerlist = [
       await waitForElm("#react-root > div > div:nth-child(4) > div > div > section > div.introduction-right > div.container-card.idBox > div:nth-child(2) > div.card-stat > h4");
       PageUpdateCheck();
   }
-  
+
 
   //Check RAD box for match against Danger List
   async function PageUpdateCheck() {
@@ -2728,7 +2829,7 @@ const dangerlist = [
       {
           if (window.location.pathname == "/back_office") {
               try {
-                  if (dangerlist.includes(document.querySelector("#react-root > div > div:nth-child(4) > div > div > section > div.introduction-right > div.container-card.idBox > div:nth-child(2) > div.card-stat > h4").innerText)) { 
+                  if (dangerlist.includes(document.querySelector("#react-root > div > div:nth-child(4) > div > div > section > div.introduction-right > div.container-card.idBox > div:nth-child(2) > div.card-stat > h4").innerText)) {
                       Scanner();
                       RadLink()
                   }
@@ -2740,7 +2841,7 @@ const dangerlist = [
           }
       }, 1000);
   }
-  
+
 
   //Edit Full Sync Box and disable it
   function Scanner() {
@@ -2752,7 +2853,7 @@ const dangerlist = [
         OverrideButton();
       }
   }
-  
+
 
   //Allow manual overrides
   async function OverrideButton() {
@@ -2764,7 +2865,7 @@ const dangerlist = [
     });
     document.querySelector("#react-root > div > div:nth-child(4) > div > div > section > div.introduction-right > div.container-card.accountSettingsBox > div:nth-child(9) > div.content-item.full-sync > span").append(button);
   }
-  
+
 
   // Wait for element to appear on page before trying to modify it:
   function waitForElm(selector) {
@@ -2798,7 +2899,7 @@ else{document.querySelector("#react-root > div > div:nth-child(4) > div > div > 
 } catch (error) {
     null
 }
-    
+
 
 
 }
@@ -2807,54 +2908,52 @@ else{document.querySelector("#react-root > div > div:nth-child(4) > div > div > 
 
 
 
-  /* Praise the Omnissiah                                                                                     
-                                           &&&&&&&&&&:                                    
-                                        &&&&&&&&&&&&&&&&                               
-                                        &&&&&&&&&&&&&&&&&&&&                           
-                                      .&&&&&&&&&&&&&&&&&&&&&&&&                        
-                                   ;&&&&   &&&&&&&&&&&&&&&&&&&&&&X                     
-                         &&        X&&&&   &&&&&&&&&&&&&&&&&&&&&&&&&                   
-                      &&&&&&:      &&&&&   &&&&&&&&&    $&&&&&&&&&&&&$                 
-                    &&&&&&&&&&&&&&&&&&&&       +&&&       &&&&&&&&&&&&&                
-                     &&&&&&&&&&&&&&&&&&&                 &&&&&&&&&&&&&&&&              
-                      &&&&&&&&&&&&&&&&&&                X&&&&&&&&&&&&&&&&&             
-                     &&&&&&&&&&&&+      &&&&&&x          X&&&&&&&&&&&&&&&&&            
-            &&&&   &&&&&&&&&&&          &&&&&&&&&&         &&&&&&&&&&&&&&&&&           
-           &&&&&&&&&&&&&&&&&            &&&&&&&&&&&&               &&&&&&&&&&          
-          &&&&&&&&&&&&&&&&              &&&&&&&&&&&&&&              ;&&&&&&&&&         
-         &&&&&&&&&&&&&&&&               &&&&&&&&&&&&&&&              &&&&&&&&&         
-           ;&&&&&&&&&&&&                &&&&&&&&&&&&&&&+          &&&&&&&&&&&&&        
-             &&&&&&&&&&&                &&&&&&&&&&&&&&&&         &&&&&&&&&&&&&&        
-             &&&&&&&&&&&                &&&&&&&&&&&&&&&&          &&&&&&&&&&&&&&       
-            +&&&&&&&&&&&                &&&&&&&&&&&&&&&&          &&&&&&&&&&&&&&       
-       &&&&&&&&&&&&&&&&&                &&&&&&&&&&&&&&&            &&&&&&&&&&&&&       
-      +&&&&&&&&&&&&&&&&&&               &&&&&&&&&&&&&&&                 &&&&&&&&;      
-      x&&&&&&&&&&&&&&&&&&+              &&&&&&&&&&&&&&                  &&&&&&&&x      
-      x&&&&&&&&&&&&&&&&&&&              &&&&&&&&&&&&&&                  &&&&&&&&;      
-       &&&&&&&&&&&&&&&&&&&              &&&&&&&&&&&&&&             &&&&&&&&&&&&&       
-            &&&&&&&&&&&&&   &&&&&+      &&&&&&X    &&&&           &&&&&&&&&&&&&&       
-             &&&&&&&&&&&    &&&&&&&&&x  &&         &&&&:         .&&&&&&&&&&&&&&       
-             X&&&&&&&&&&&    &&&&&&X    &&&&.     :&&&&          &&&&&&&&&&&&&&+       
-            &&&&&&&&&&&&&$             & &&&&&&&&&&&&&           :&&&&&&&&&&&&&        
-         &&&&&&&&&&&&&&&&&            && ;&&&&&&&&&&&+              +&&&&&&&&&$        
-          &&&&&&&&&&&&&&&&&&  .&     x+.&;&&&&&&&&&&                x&&&&&&&&&         
-           &&&&&&&&&&&&&&&&&&&&&        &&&&&&&&                   &&&&&&&&&&          
-            &&&&+  &&&&&&&&&&&&         &&&&&&&&:          &&&&&X &&&&&&&&&&.          
-                    .&&&&&&&&&&  .  .$ .&&x&&&&&&        +&&&&&&&&&&&&&&&&&            
-                      &&&&&&&&&&&&&&&&&&                +&&&&&&&&&&&&&&&&&             
-                     &&&&&&&&&&&&&&&&&&&                 $&&&&&&&&&&&&&&&              
-                    &&&&&&&&&&&&&&&&&&&&       &&&+       &&&&&&&&&&&&&$               
-                     &&&&&&&X      &&&&&   &&&&&&&&&    x&&&&&&&&&&&&&                 
-                        .&&:       X&&&&   &&&&&&&&&&&&&&&&&&&&&&&&&                   
-                                   X&&&&   &&&&&&&&&&&&&&&&&&&&&&&                     
-                                     .+&&&&&&&&&&&&&&&&&&&&&&&&+                       
-                                        &&&&&&&&&&&&&&&&&&&&X                          
-                                        &&&&&&&&&&&&&&&&&                              
-                                        &&&&&&&&&&&+                                   
-                                                                                       
+  /* Praise the Omnissiah
+                                           &&&&&&&&&&:
+                                        &&&&&&&&&&&&&&&&
+                                        &&&&&&&&&&&&&&&&&&&&
+                                      .&&&&&&&&&&&&&&&&&&&&&&&&
+                                   ;&&&&   &&&&&&&&&&&&&&&&&&&&&&X
+                         &&        X&&&&   &&&&&&&&&&&&&&&&&&&&&&&&&
+                      &&&&&&:      &&&&&   &&&&&&&&&    $&&&&&&&&&&&&$
+                    &&&&&&&&&&&&&&&&&&&&       +&&&       &&&&&&&&&&&&&
+                     &&&&&&&&&&&&&&&&&&&                 &&&&&&&&&&&&&&&&
+                      &&&&&&&&&&&&&&&&&&                X&&&&&&&&&&&&&&&&&
+                     &&&&&&&&&&&&+      &&&&&&x          X&&&&&&&&&&&&&&&&&
+            &&&&   &&&&&&&&&&&          &&&&&&&&&&         &&&&&&&&&&&&&&&&&
+           &&&&&&&&&&&&&&&&&            &&&&&&&&&&&&               &&&&&&&&&&
+          &&&&&&&&&&&&&&&&              &&&&&&&&&&&&&&              ;&&&&&&&&&
+         &&&&&&&&&&&&&&&&               &&&&&&&&&&&&&&&              &&&&&&&&&
+           ;&&&&&&&&&&&&                &&&&&&&&&&&&&&&+          &&&&&&&&&&&&&
+             &&&&&&&&&&&                &&&&&&&&&&&&&&&&         &&&&&&&&&&&&&&
+             &&&&&&&&&&&                &&&&&&&&&&&&&&&&          &&&&&&&&&&&&&&
+            +&&&&&&&&&&&                &&&&&&&&&&&&&&&&          &&&&&&&&&&&&&&
+       &&&&&&&&&&&&&&&&&                &&&&&&&&&&&&&&&            &&&&&&&&&&&&&
+      +&&&&&&&&&&&&&&&&&&               &&&&&&&&&&&&&&&                 &&&&&&&&;
+      x&&&&&&&&&&&&&&&&&&+              &&&&&&&&&&&&&&                  &&&&&&&&x
+      x&&&&&&&&&&&&&&&&&&&              &&&&&&&&&&&&&&                  &&&&&&&&;
+       &&&&&&&&&&&&&&&&&&&              &&&&&&&&&&&&&&             &&&&&&&&&&&&&
+            &&&&&&&&&&&&&   &&&&&+      &&&&&&X    &&&&           &&&&&&&&&&&&&&
+             &&&&&&&&&&&    &&&&&&&&&x  &&         &&&&:         .&&&&&&&&&&&&&&
+             X&&&&&&&&&&&    &&&&&&X    &&&&.     :&&&&          &&&&&&&&&&&&&&+
+            &&&&&&&&&&&&&$             & &&&&&&&&&&&&&           :&&&&&&&&&&&&&
+         &&&&&&&&&&&&&&&&&            && ;&&&&&&&&&&&+              +&&&&&&&&&$
+          &&&&&&&&&&&&&&&&&&  .&     x+.&;&&&&&&&&&&                x&&&&&&&&&
+           &&&&&&&&&&&&&&&&&&&&&        &&&&&&&&                   &&&&&&&&&&
+            &&&&+  &&&&&&&&&&&&         &&&&&&&&:          &&&&&X &&&&&&&&&&.
+                    .&&&&&&&&&&  .  .$ .&&x&&&&&&        +&&&&&&&&&&&&&&&&&
+                      &&&&&&&&&&&&&&&&&&                +&&&&&&&&&&&&&&&&&
+                     &&&&&&&&&&&&&&&&&&&                 $&&&&&&&&&&&&&&&
+                    &&&&&&&&&&&&&&&&&&&&       &&&+       &&&&&&&&&&&&&$
+                     &&&&&&&X      &&&&&   &&&&&&&&&    x&&&&&&&&&&&&&
+                        .&&:       X&&&&   &&&&&&&&&&&&&&&&&&&&&&&&&
+                                   X&&&&   &&&&&&&&&&&&&&&&&&&&&&&
+                                     .+&&&&&&&&&&&&&&&&&&&&&&&&+
+                                        &&&&&&&&&&&&&&&&&&&&X
+                                        &&&&&&&&&&&&&&&&&
+                                        &&&&&&&&&&&+
+
             Machine Spirit, accept my gift,
 
-            Swallow the light, and spit out death.                                                                               
+            Swallow the light, and spit out death.
  */
-
-
