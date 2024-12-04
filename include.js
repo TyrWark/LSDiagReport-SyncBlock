@@ -215,8 +215,9 @@ await timer(750)
     <path d="M1,5 L11,5"></path>
     <polyline points="8 1 12 5 8 9"></polyline>
   </svg>
-</button>
-`
+</button>`
+
+document.querySelector("#react-root > div > div > section").style.marginBottom= "10px"
 
         }else{console.log("Incorrect Page")}
 
