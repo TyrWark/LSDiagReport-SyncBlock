@@ -1,4 +1,4 @@
-
+console.log("hi")
 var SubResp = new Object();
 var ParseResp = new Array();
 var table;
