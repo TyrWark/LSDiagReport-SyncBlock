@@ -2663,37 +2663,62 @@ function RadLink() {
         null;
     }
 }
-function sendmessages() {
-    console['log']('Masses');
-    document['querySelector']('#react-root\x20>\x20div\x20>\x20div:nth-child(4)\x20>\x20div\x20>\x20div\x20>\x20section\x20>\x20div.introduction-right\x20>\x20div.container-card.accountSettingsBox\x20>\x20div:nth-child(9)\x20>\x20div.content-item.full-sync\x20>\x20div\x20>\x20input[type=checkbox]')['onclick'] = function () {
-        var _0x424c65 = document['querySelector']('#react-root\x20>\x20div\x20>\x20div:nth-child(4)\x20>\x20div\x20>\x20div\x20>\x20section\x20>\x20div.introduction-right\x20>\x20div.container-card.idBox\x20>\x20div:nth-child(2)\x20>\x20div.card-stat\x20>\x20h4');
-        var _0x280e37 = document['querySelector']('#o-wrapper\x20>\x20header\x20>\x20nav\x20>\x20ul.cd-user-nav\x20>\x20li\x20>\x20a')['dataset']['tipsy'];
-        var _0x4c88d4 = _0x424c65['innerText'] + '\x20/\x20' + document['querySelector']('#react-root\x20>\x20div\x20>\x20div:nth-child(4)\x20>\x20div\x20>\x20div\x20>\x20section\x20>\x20div.introduction-full\x20>\x20div\x20>\x20h1')['innerText'];
-        var _0x5c63aa = ![];
-        if (dangerlist['includes'](_0x424c65['innerText'])) {
-            _0x5c63aa = !![];
+//Add Event on Full Sync selector
+function sendmessages(){
+    console.log("Masses")
+
+    document.querySelector("#react-root > div > div:nth-child(4) > div > div > section > div.introduction-right > div.container-card.accountSettingsBox > div:nth-child(9) > div.content-item.full-sync > div > input[type=checkbox]").onclick = function(){
+
+        var rad = document.querySelector("#react-root > div > div:nth-child(4) > div > div > section > div.introduction-right > div.container-card.idBox > div:nth-child(2) > div.card-stat > h4")
+        var b = document.querySelector("#o-wrapper > header > nav > ul.cd-user-nav > li > a").dataset.tipsy
+        var a = rad.innerText + " / " + document.querySelector("#react-root > div > div:nth-child(4) > div > div > section > div.introduction-full > div > h1").innerText
+        var c = false
+
+
+        if(dangerlist.includes(rad.innerText)){
+
+            c = true
+
         }
-        PosttoSlack(_0x4c88d4, _0x280e37, _0x5c63aa);
-    };
+
+        PosttoSlack(a,b,c)
+    }
+
+
 }
-async function PosttoSlack(_0x4d3d03, _0x26e2b7, _0x26e15f) {
-    console['log'](_0x4d3d03);
-    console['log'](_0x26e2b7);
-    console['log'](_0x26e15f);
-    const _0x2a5ff9 = await fetch('https://hooks.zapier.com/hooks/catch/19346638/2l4mq8z/', {
-        'method': 'POST',
-        'headers': {
+
+
+
+
+
+
+//Scream at slack
+async function PosttoSlack(a,b,c){
+
+
+    console.log(a)
+
+    console.log(b)
+
+    console.log(c)
+
+
+    const rawResponse = await fetch('https://hooks.zapier.com/hooks/catch/19346638/2l4mq8z/', {
+        method: 'POST',
+        headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        'mode': 'no-cors',
-        'body': JSON['stringify']({
-            'RAD': _0x4d3d03,
-            'User': _0x26e2b7,
-            'Flagged_Account': _0x26e15f
-        })
+        mode:"no-cors",
+        body: JSON.stringify({RAD: a, User: b, Flagged_Account: c})
     });
+
+
+
+
+
 }
+
 
 async function extendDevTools(){
     console.log("fired")
