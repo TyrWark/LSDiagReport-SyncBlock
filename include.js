@@ -2762,21 +2762,31 @@ async function extendDevTools(){
 
 }
 
+var counter = 0
 
-var counter = 0x0;
-function deadpagedetection() {
-    setInterval(detectblanks, 0x3e8);
+function deadpagedetection(){
+
+
+    setInterval(detectblanks,1000)
+
+
 }
-async function detectblanks() {
-    console['log']('Loop');
-    if (document['querySelector']('#react-root')['innerHTML']['length'] === 0x0) {
-        if (counter === 0x1) {
-            console['log']('Second\x20Fail');
-            location['reload']();
-        } else {
-            counter++;
+
+async function detectblanks(){
+
+    console.log("Loop")
+
+    if(document.querySelector("#react-root").innerHTML.length === 0){
+        if(counter === 1){
+            console.log("Second Fail")
+            location.reload()
+
+
         }
-    } else {
-        counter = 0x0;
-    }
+        else{counter++}
+
+
+
+    }else{counter = 0}
+
 }
